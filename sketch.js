@@ -7,6 +7,9 @@ let spawnMultiplier = 1;
 let targetTimer = 0; 
 let loopCycle = false;
 let gameState = "running";
+let characterMenu = new Menu(10,10,200,200,[]);
+let mainMenu;
+let openMenu = null; 
 
 function getMouseVector(){
 	let mouseXalt = mouseX - pc.x;
@@ -18,6 +21,7 @@ function getMouseVector(){
 
 function setup() {
   createCanvas(600, 600);
+  mainMenu = new Menu(width - 145, 10, 140, 200, []);
   pc = new player();
   deb = new debugScreen();
   frameRate(120);
@@ -54,6 +58,15 @@ function draw() {
   let fc = frameCount % 120;
   //console.log(fc);
   deb.display();
+  
+  if (gameState === "menu" && openMenu != null) {
+    //console.log(openMenu)
+    let elem = openMenu.interact(mouseX, mouseY);
+    if (elem != null) 
+      elem.mousePress(mouseIsPressed, mouseButton);
+    if (openMenu != null) openMenu.draw();
+  }
+
   if (gameState === "running") {
     targetTimer += 1;
     let spawnInterval = int(100 / spawnMultiplier);
@@ -101,6 +114,12 @@ function draw() {
     pc.update();
     pc.display();
     pc.move();
+
+    let melem = mainMenu.interact(mouseX, mouseY);
+    if (melem != null) {
+      melem.mousePress(mouseIsPressed, mouseButton)
+    }
+    mainMenu.draw();
   }
 }
 
