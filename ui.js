@@ -6,29 +6,24 @@ const Interaction = {
 function createMainUi() {
     createMainMenu();
     createCharacterScreen();
-    createShop();
+    createShopScreen();
 }
 
 function createMainMenu() {
     mainMenu.addItem(new Header(0,0, mainMenu.w, 15, "MainMenu", (dx,dy) => {characterMenu.shift(dx,dy);}))
     mainMenu.addItem(new Button(0,15, mainMenu.w, 30, "Character", ()=>{console.log('Opening Character Menu'); openMenu = characterMenu; gameState = "menu";}, color(0), color(255,0,0), color(225,0,0), color(255)))
+    mainMenu.addItem(new Button(0,47, mainMenu.w, 30, "Shop", ()=>{console.log('Opening Shop Menu'); openMenu = shopMenu; gameState = "menu";}, color(0), color(255,0,0), color(225,0,0), color(255)))
     
 }
 
-function createShop() {
-// Shop Button
-let shopButton = createImg('imgs/Shop.svg')
-shopButton.position(width + 5, 130);
-//shopButton.mousePressed(openShop);
+function createShopScreen() {
+    shopMenu.addItem(new Header(0,0, shopMenu.w, 30, "Shop", (dx,dy) => {shopMenu.shift(dx,dy);}))
+    shopMenu.addItem(new Button(0, shopMenu.h, shopMenu.w, 30, "Close", ()=>{closeScreen();}, color(0), color(255,0,0), color(225,0,0), color(255)));
 }
 
 function createCharacterScreen() {
-    let charButton = createImg('imgs/info.svg')
-    charButton.position(width+5,10)
-
     characterMenu.addItem(new Header(0,0, characterMenu.w, 15, "Character Stats", (dx,dy) => {characterMenu.shift(dx,dy);}))
-    characterMenu.addItem(new Button(0,30, characterMenu.w, 30, "Close", ()=>{console.log('Closing Character Menu'); closeScreen()}, color(0), color(255,0,0), color(225,0,0), color(255)))
-    //charButton.mousePressed(openScreen(characterMenu));
+    characterMenu.addItem(new Button(0,characterMenu.h, characterMenu.w, 30, "Close", ()=>{console.log('Closing Character Menu'); closeScreen()}, color(0), color(255,0,0), color(225,0,0), color(255)))
 }
 
 function openScreen(menu)

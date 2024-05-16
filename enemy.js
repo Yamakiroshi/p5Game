@@ -26,9 +26,10 @@ class enemy{
         this.targetY = pc.y;
         this.targetDir = createVector(this.targetX - this.x, this.targetY - this.y);
         this.targetDir.normalize();
-        this.xSpd = this.targetDir.x*spawnMultiplier;
-        this.ySpd = this.targetDir.y*spawnMultiplier;
+        this.xSpd = this.targetDir.x//*spawnMultiplier;
+        this.ySpd = this.targetDir.y//*spawnMultiplier;
         this.r = 12 * sizeMultiplier;
+        this.damage = 10;
     }
 
     display() {
@@ -42,8 +43,8 @@ class enemy{
     calculatePlayerLocation() {
         let vect = createVector(pc.x - this.x, pc.y - this.y);
         this.targetDir = vect.normalize();
-        this.xSpd = this.targetDir.x*spawnMultiplier;
-        this.ySpd = this.targetDir.y*spawnMultiplier;
+        this.xSpd = this.targetDir.x//*spawnMultiplier;
+        this.ySpd = this.targetDir.y//*spawnMultiplier;
     }
 
     update() {
@@ -51,6 +52,21 @@ class enemy{
             this.calculatePlayerLocation();
             this.x += this.xSpd;
             this.y += this.ySpd;
+        }
+    }
+    checkBoundaryCollision() {
+        if (this.x > width - this.r) {
+          this.x = width - this.r;
+          //this.velocity.x *= -1;
+        } else if (this.x < this.r) {
+          this.x = this.r;
+          //this.velocity.x *= -1;
+        } else if (this.y > height - this.r) {
+          this.y = height - this.r;
+          //this.velocity.y *= -1;
+        } else if (this.y < this.r) {
+          this.y = this.r;
+          //this.velocity.y *= -1;
         }
     }
 
